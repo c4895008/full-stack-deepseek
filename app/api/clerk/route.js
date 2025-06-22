@@ -12,21 +12,21 @@ export async function POST(req) {
         "svix-timestamp": headerPayload.get("svix-timestamp"),
         "svix-signature": headerPayload.get("svix-signature"),
     }
-    console.log('svixHeaders');
-    console.log(svixHeaders);
     ///Get the payload and verify it
     const payload = await req.json();
     const body = JSON.stringify(payload);
     const { data, type } = wh.verify(body, svixHeaders);
     ///Prepare the user data to be saved in the database
+    console.log(data);
     const userData = {
         _id: data.id,
         email: data.email_addresses[0].email_address,
-        name: `${data.first_name} ${data.last_name}}`,
-        image: data.image_url
+        name: `${data.first_name} ${data.last_name}`,
+        image: data.image_url,
     }
     console.log(userData);
     await connectDB();
+    console.log(type);
     switch (type) {
         case "user.created":
             await User.create(userData);
