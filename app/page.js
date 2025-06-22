@@ -30,7 +30,7 @@ export default function Home() {
               </>
             ) : (
               <>
-                <Message role='user1' content='What is next js?'  />
+                <Message role='user' content='What is next js content base directory structure?'  />
               </>
             )
           }
