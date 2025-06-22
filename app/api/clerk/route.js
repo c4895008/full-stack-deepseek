@@ -8,8 +8,11 @@ export default async function POST(req, res) {
     const headerPayload = await headers();
     const svixHeaders = {
         "svix-id": headerPayload.get("svix-id"),
+        "svix-timestamp": headerPayload.get("svix-timestamp"),
         "svix-signature": headerPayload.get("svix-signature"),
     }
+    console.log('svixHeaders');
+    console.log(svixHeaders);
     ///Get the payload and verify it
     const payload = await req.json();
     const body = JSON.stringify(payload);
@@ -20,7 +23,8 @@ export default async function POST(req, res) {
         email: data.email_addresses[0].email_address,
         name: `${data.first_name} ${data.last_name}}`,
         image: data.image_url
-    } 
+    }
+    console.log(userData);
     await connectDB();
     switch (type) {
         case "user.created":
