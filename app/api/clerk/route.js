@@ -3,7 +3,7 @@ import connectDB from "@/config/db";
 import User from "@/models/User";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
-export default async function handler(req, res) {
+export default async function POST(req, res) {
     const wh = new Webhook(process.env.SIGNING_SECRET);
     const headerPayload = await headers();
     const svixHeaders = {
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         email: data.email_addresses[0].email_address,
         name: `${data.first_name} ${data.last_name}}`,
         image: data.image_url
-    }
+    } 
     await connectDB();
     switch (type) {
         case "user.created":
