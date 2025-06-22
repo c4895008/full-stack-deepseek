@@ -30,10 +30,10 @@ export async function POST(req) {
             await User.create(userData);
             break;
         case "user.updated":
-            await User.findOneAndUpdate({ _id: data.id }, userData);
+            await User.findOneAndUpdate({ clerkUserId: data.id }, userData);
             break;
         case "user.deleted":
-            await User.findOneAndDelete({ _id: data.id });
+            await User.findOneAndDelete({ clerkUserId: data.id });
             break;
         default:
             break;
