@@ -20,7 +20,7 @@ export default function Home() {
             <Image alt='logo' className='opacity-70' src={assets.chat_icon} />
           </div>
           {
-            messages.length != 0 ? (
+            messages.length == 0 ? (
               <>
                 <div className='flex items-center gap-3'>
                   <Image alt='logo' className='h-16' src={assets.logo_icon} />
@@ -30,7 +30,7 @@ export default function Home() {
               </>
             ) : (
               <>
-                <Message role='user' content='What is next js content base directory structure?'  />
+                <Message role='user' content='What is next js?' />
               </>
             )
           }

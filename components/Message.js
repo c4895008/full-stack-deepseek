@@ -30,7 +30,6 @@ export default function Message({ role, content }) {
                             </div>
                         </>)
                     }
-
                 </div>
             </div>
         </div>

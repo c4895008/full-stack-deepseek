@@ -17,23 +17,24 @@ export async function POST(req) {
     const body = JSON.stringify(payload);
     const { data, type } = wh.verify(body, svixHeaders);
     ///Prepare the user data to be saved in the database
+    console.log('------------');
     const userData = {
         clerkUserId: data.id,
         email: data.email_addresses[0].email_address,
         name: `${data.first_name} ${data.last_name}`,
         image: data.image_url,
     }
-    console.log(userData);
+    console.log(userData, 'userData');
     await connectDB();
     switch (type) {
         case "user.created":
             await User.create(userData);
             break;
         case "user.updated":
-            await User.findOneAndUpdate({ clerkUserId: data.id }, userData);
+            await User.findByIdAndUpdate(data.id, userData);
             break;
         case "user.deleted":
-            await User.findOneAndDelete({ clerkUserId: data.id });
+            await User.findByIdAndDelete(data.id);
             break;
         default:
             break;

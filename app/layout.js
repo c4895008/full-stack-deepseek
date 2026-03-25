@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import {AppContextProvider} from "../context/AppContext";
+import { AppContextProvider } from "../context/AppContext";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const interSans = Inter({
@@ -23,6 +24,20 @@ export default function RootLayout({ children }) {
           <body
             className={`${interSans.variable}  antialiased`}
           >
+            <Toaster toastOptions={{
+              success: {
+                style: {
+                  background: "black",
+                  color: "white"
+                }
+              },
+              error: {
+                style: {
+                  background: "black",
+                  color: "red"
+                }
+              }
+            }} />
             {children}
           </body>
         </html>
