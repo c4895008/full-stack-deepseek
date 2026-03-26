@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { AppContextProvider } from "../context/AppContext";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import "./prism.css";
 
 const interSans = Inter({
   variable: "--font-inter",
@@ -24,20 +25,12 @@ export default function RootLayout({ children }) {
           <body
             className={`${interSans.variable}  antialiased`}
           >
-            <Toaster toastOptions={{
-              success: {
-                style: {
-                  background: "black",
-                  color: "white"
-                }
-              },
-              error: {
-                style: {
-                  background: "black",
-                  color: "red"
-                }
-              }
-            }} />
+            <Toaster
+              toastOptions={{
+                success: { style: { background: "black", color: "white" } },
+                error: { style: { background: "black", color: "white" } },
+              }}
+            />
             {children}
           </body>
         </html>

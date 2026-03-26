@@ -1,0 +1,17 @@
+{
+    "success": true,
+    "data": {
+        "role": "assistant",
+        "content": "中国的首都是**北京**。  \n北京是中国的政治、文化、国际交往和科技创新中心，也是历史悠久的世界著名古都。",
+        "timestamp": 1774494666732
+    }
+}
+
+{
+    "success": true,
+    "data": {
+        "role": "assistant",
+        "content": "**React** is an **open-source JavaScript library** for building user interfaces, primarily for web applications. It was created by Facebook (now Meta) and is now maintained by Meta and a community of developers.\n\n---\n\n## **Key Characteristics:**\n\n### 1. **Component-Based Architecture**\n- UIs are built from reusable, independent **components** (like Lego blocks).\n- Each component manages its own state and logic, then composes together to form complex interfaces.\n\n### 2. **Declarative Syntax**\n- You describe *what* the UI should look like for any given state, and React automatically updates the DOM when data changes.\n- Instead of manually manipulating the DOM (like with jQuery), you declare the desired outcome.\n\n### 3. **Virtual DOM**\n- React creates a lightweight copy of the real DOM (Virtual DOM).\n- When state changes, React compares the new Virtual DOM with the previous one and efficiently updates **only the changed parts** of the real DOM (this process is called **reconciliation**).\n\n---\n\n## **Core Concepts:**\n\n### **Components**\n- Building blocks of a React app.\n- Can be **functional** (modern, with hooks) or **class-based** (older style).\n\n**Example of a functional component:**\n```jsx\nfunction Welcome(props) {\n  return <h1>Hello, {props.name}</h1>;\n}\n```\n\n### **JSX (JavaScript XML)**\n- A syntax extension that lets you write HTML-like code in JavaScript.\n- Makes code more readable and expressive.\n\n```jsx\nconst element = <h1 className=\"greeting\">Hello, world!</h1>;\n```\n\n### **State & Props**\n- **Props**: Data passed from parent to child (immutable).\n- **State**: Internal data managed within a component (mutable, updated with `useState` or `setState`).\n\n### **Hooks**\n- Functions that let you use state and other React features in functional components.\n- Examples: `useState`, `useEffect`, `useContext`.\n\n---\n\n## **Why React is Popular:**\n\n1. **Reusability** – Components can be reused across projects.\n2. **Performance** – Virtual DOM minimizes expensive DOM operations.\n3. **Strong Ecosystem** – Rich set of tools (React Router, Redux, Next.js) and community support.\n4. **Learn Once, Write Anywhere** – Can be used for web, mobile (React Native), and even desktop apps.\n\n---\n\n## **Example of a Simple Counter App:**\n```jsx\nimport { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>You clicked {count} times</p>\n      <button onClick={() => setCount(count + 1)}>\n        Click me\n      </button>\n    </div>\n  );\n}\n```\n\n---\n\n## **Common Use Cases:**\n- Single Page Applications (SPAs)\n- Dynamic web interfaces (dashboards, social media feeds)\n- Progressive Web Apps (PWAs)\n- Cross-platform mobile apps (via React Native)\n\n---\n\nReact is often used as part of a larger stack (like the **MERN** stack: MongoDB, Express, React, Node.js) and continues to evolve with new features and patterns.",
+        "timestamp": 1774494884471
+    }
+}

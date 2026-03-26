@@ -10,6 +10,7 @@ export async function POST(req) {
         }
         const { chatId, name } = await req.json();
         await connectDB();
+        console.log({ _id: chatId, userId }, { name });
         await Chat.findOneAndUpdate({ _id: chatId, userId }, { name });
         return NextResponse.json({ success: true, message: "Chat Renamed Successfully!" });
     } catch (err) {

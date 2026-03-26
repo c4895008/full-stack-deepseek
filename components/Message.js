@@ -1,6 +1,17 @@
 import { assets } from "@/assets/assets";
 import Image from 'next/image';
+import Markdown from "react-markdown";
+import Prism from "prismjs";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 export default function Message({ role, content }) {
+    const copyMessage = () => {
+        navigator.clipboard.writeText(content);
+        toast.success("Message copied to clipboard");
+    };
+    useEffect(() => {
+        Prism.highlightAll();
+    }, [content])
     return (
         <div className="flex flex-col w-full max-w-3xl text-sm items-center">
             <div className={`flex flex-col w-full mb-8 ${role == 'user' && 'items-end'}`}>
@@ -9,10 +20,10 @@ export default function Message({ role, content }) {
                         <div className="flex items-center gap-2 opacity-70">
                             {
                                 role == 'user' ? (<>
-                                    <Image className='w-4 cursor-pointer' src={assets.copy_icon} alt="user" />
+                                    <Image onClick={copyMessage} className='w-4 cursor-pointer' src={assets.copy_icon} alt="user" />
                                     <Image className='w-4.5 cursor-pointer' src={assets.pencil_icon} alt="user" />
                                 </>) : (<>
-                                    <Image className='w-4.5 cursor-pointer' src={assets.copy_icon} alt="user" />
+                                    <Image onClick={copyMessage} className='w-4.5 cursor-pointer' src={assets.copy_icon} alt="user" />
                                     <Image className='w-4.5 cursor-pointer' src={assets.regenerate_icon} alt="user" />
                                     <Image className='w-4 cursor-pointer' src={assets.like_icon} alt="user" />
                                     <Image className='w-4.5 cursor-pointer' src={assets.dislike_icon} alt="user" />
@@ -26,7 +37,7 @@ export default function Message({ role, content }) {
                         </>) : (<>
                             <Image className='w-9 h-9 p-1 border border-white/15 rounded-full' src={assets.logo_icon} alt="user" />
                             <div className="space-y-4 w-full overflow-scroll">
-                                {content}
+                                <Markdown>{content}</Markdown>
                             </div>
                         </>)
                     }

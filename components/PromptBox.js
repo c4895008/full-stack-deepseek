@@ -5,18 +5,19 @@ import { set } from 'mongoose';
 import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-export default function  ({ isLoading, setIsLoading }) {
+export default function ({ isLoading, setIsLoading }) {
     const [prompt, setPrompt] = useState("");
     const { user, chats, setChats, selectedChat, setSelectedChat } = useAppContext();
+    //console.log(chats, selectedChat);
     const sendPrompt = async (e) => {
-        e.preventDefault();
         let copyPrompt = prompt;
         try {
+            e.preventDefault();
             if (!user) {
-                //return toast.error("Please login to continue");
+                return toast.error("Login to send message!");
             }
             if (isLoading) {
-                return toast.error("Please wait for the previous request to complete");
+                return toast.error("Please wait for the previous request to complete!");
             }
             setIsLoading(true);
             setPrompt("");
@@ -25,30 +26,67 @@ export default function  ({ isLoading, setIsLoading }) {
                 content: prompt,
                 timestamp: Date.now()
             }
+
+            ///saving user prompt in chats array
             setChats((prevChats) => prevChats.map(chat => chat._id === selectedChat._id ? { ...chat, messages: [...chat.messages, userPrompt] } : chat));
-            setSelectedChat((prev) => ({ ...prev, messages: [...prev.messages, userPrompt] }));
+            setSelectedChat((prev) => {
+                const updatedChat = { ...prev, messages: [...prev.messages, userPrompt] };
+                return updatedChat;
+            });
             const { data } = await axios.post('/api/chat/ai', {
                 chatId: selectedChat._id,
                 prompt: prompt
             });
             if (data.success) {
-                setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat._id ? { ...chat, messages: [...chat.messages, data.message] } : chat))
+                setChats((prevChats) => prevChats.map((chat) => chat._id === selectedChat._id ? { ...chat, messages: [...chat.messages, data.data] } : chat));
+                const message = data.data.content;
+                const messageTokens = message.split(" ");
+                const assistantMessage = {
+                    role: "assistant",
+                    content: "",
+                    timestamp: Date.now(),
+                };
+                setSelectedChat((prev) => (
+                    {
+                        ...prev,
+                        messages: [
+                            ...prev.messages,
+                            assistantMessage,
+                        ],
+                    }
+                ));
+                for (let i = 0; i < messageTokens.length; i++) {
+                    setTimeout(() => {
+                        assistantMessage.content = messageTokens.slice(0, i + 1).join(" ");
+                        setSelectedChat((prev) => {
+                            const updateMessages = [
+                                ...prev.messages.slice(0, -1),
+                                assistantMessage,
+                            ]
+                            return {
+                                ...prev,
+                                messages: updateMessages,
+                            }
+                        });
+                    }, i * 100);
+                }
             } else {
                 toast.error(data.message);
-                sendPrompt(copyPrompt);
             }
         } catch (e) {
             toast.error(e.message);
-            sendPrompt(copyPrompt);
+        } finally {
+            setIsLoading(false);
         }
     };
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
             sendPrompt(e)
         }
     }
     return (
-        <form onSubmit={sendPrompt} className={`w-full ${false ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
+        <form onSubmit={sendPrompt} className={`w-full ${selectedChat && selectedChat.messages.length > 0 ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
             <textarea onKeyDown={handleKeyDown} onChange={(e) => setPrompt(e.target.value)} className="outline-none w-full resize-none overflow-hidden break-words bg-transparent" rows={2} placeholder="Message DeepSeek" required></textarea>
             <div className='flex items-center justify-between text-sm'>
                 <div className='flex items-center gap-2'>

@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(req) {
     try {
         const { userId } = getAuth(req);
+       
         if (!userId) {
             return NextResponse.json({ success: false, message: "User not authenticated!" });
         }

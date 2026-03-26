@@ -13,6 +13,7 @@ export async function POST(req) {
             messages: [],
             name: 'New Chat'
         }
+        console.log(chatData);
         await connectDB();
         await Chat.create(chatData);
         return NextResponse.json({ success: true, message: 'Chat created successfully' });

@@ -17,7 +17,6 @@ export async function POST(req) {
     const body = JSON.stringify(payload);
     const { data, type } = wh.verify(body, svixHeaders);
     ///Prepare the user data to be saved in the database
-    console.log('------------');
     const userData = {
         clerkUserId: data.id,
         email: data.email_addresses[0].email_address,

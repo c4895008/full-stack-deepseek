@@ -8,7 +8,7 @@ export async function POST(req) {
         if (!userId) {
             return NextResponse.json({ success: false, message: "User not authenticated!" });
         }
-        const { chatId, name } = await req.json();
+        const { chatId } = await req.json();
         await connectDB();
         await Chat.deleteOne({ _id: chatId, userId });
         return NextResponse.json({ success: true, message: "Chat Deleted Successfully!" });
