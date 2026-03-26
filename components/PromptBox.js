@@ -10,7 +10,6 @@ export default function ({ isLoading, setIsLoading }) {
     const { user, chats, setChats, selectedChat, setSelectedChat } = useAppContext();
     //console.log(chats, selectedChat);
     const sendPrompt = async (e) => {
-        let copyPrompt = prompt;
         try {
             e.preventDefault();
             if (!user) {
@@ -87,7 +86,7 @@ export default function ({ isLoading, setIsLoading }) {
     }
     return (
         <form onSubmit={sendPrompt} className={`w-full ${selectedChat && selectedChat.messages.length > 0 ? "max-w-3xl" : "max-w-2xl"} bg-[#404045] p-4 rounded-3xl mt-4 transition-all`}>
-            <textarea onKeyDown={handleKeyDown} onChange={(e) => setPrompt(e.target.value)} className="outline-none w-full resize-none overflow-hidden break-words bg-transparent" rows={2} placeholder="Message DeepSeek" required></textarea>
+            <textarea onKeyDown={handleKeyDown} onChange={(e) => setPrompt(e.target.value)} className="outline-none w-full resize-none overflow-hidden break-words bg-transparent" value={prompt} rows={2} placeholder="Message DeepSeek" required></textarea>
             <div className='flex items-center justify-between text-sm'>
                 <div className='flex items-center gap-2'>
                     <p className='flex items-center gap-2 text-xs border border-gray-300/40 px-2 py-1 rounded-full cursor-pointer hover:bg-gray-500/20 transition'>
